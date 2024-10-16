@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
     [SerializeField] TextMeshProUGUI posText;
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private Animator animator;
+    [SerializeField] private Transform _meshAnchor;
+    [SerializeField] private float _rotationSpeed = 10f;
     private int sequenceNumber = 0;
     CircularArray<PlayerInputExtraInfo> pendingInputs = new CircularArray<PlayerInputExtraInfo>(100);
     public Vector2 pos = new Vector2(0, 0);
@@ -25,6 +27,10 @@ public class Player : MonoBehaviour
     public PlayerAction playerAction;
     public int currLevel = 1;
     public int width, height;
+    
+    private Vector2 _direction;
+    
+    
     // may need introduce other parameters
     public void PlayerInit(Vector2 pos)
     {
@@ -200,6 +206,14 @@ public class Player : MonoBehaviour
         // check the boundary map is from left bottom(0,0) to up right(100,100)
         pos.x = Mathf.Clamp(pos.x, 0, width);
         pos.y = Mathf.Clamp(pos.y, 0, height);
+        
+        if (speedVector != Vector2.zero)
+        {
+            float targetAngle = Mathf.Atan2(speedVector.x, -speedVector.y) * Mathf.Rad2Deg;
+
+            Vector3 currentRotation = _meshAnchor.eulerAngles;
+            _meshAnchor.rotation = Quaternion.Euler(0, 0, targetAngle - 90);
+        }
     }
 
     public void ReceiveNewMsg(ServerPayload payload)

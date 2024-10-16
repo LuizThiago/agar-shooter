@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Dev
   m_EditorClassIdentifier: 
   Scheme: https
-  Host: dev-agarshooter-1.argus-dev.com
-  Port: 443
+  Host: localhost
+  Port: 7351
   ServerKey: defaultkey
   matchName: singleton_match
   matchID: 10504fff-6b57-4289-bd5c-ea5cad31a350.nakama
